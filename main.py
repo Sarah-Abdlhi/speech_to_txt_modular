@@ -1,8 +1,8 @@
 import speech_recognition as sr
-from input import get_audio
-from output import save_audio, print_transcription
-from speech_process import recognize_audio
-from error_exception import SpeechRecognitionError, handle_error
+from src.input import get_audio
+from src.output import save_audio, print_transcription
+from src.speech_process import recognize_audio
+from src.error_exception import SpeechRecognitionError, handle_error
 
 def main():
     # Initialize speech recognizer
