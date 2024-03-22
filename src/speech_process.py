@@ -1,6 +1,6 @@
 import speech_recognition as sr
 
-def recognize_audio(r, audio):
+def recognize_audio(r, audio, languages=['en-US']):
     """
     Function to recognize speech from audio data using Google's speech recognition API.
     
@@ -12,8 +12,12 @@ def recognize_audio(r, audio):
     - Transcribed text
     """
     try:
-        return r.recognize_google(audio)
-    except sr.UnknownValueError:
-        raise Exception("Unable to recognize speech")
+        for language in languages:
+            try:
+                return r.recognize_google(audio, language = language)
+            except sr.UnknownValueError:
+                continue
+        # if no transcription is successful
+        raise sr.UnknownValueError("Unable to recognize speech")
     except sr.RequestError:
         raise Exception("Could not request results; check your internet connection")

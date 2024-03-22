@@ -12,7 +12,7 @@ def main():
         # Capture audio input
         audio = get_audio(r)
         # Recognize speech
-        transcription = recognize_audio(r, audio)
+        transcription = recognize_audio(r, audio, languages=['en-US', 'fa-IR', 'de-DE'])
         # Print transcription
         print_transcription(transcription)
         # Save audio data
