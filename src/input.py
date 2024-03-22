@@ -12,7 +12,7 @@ def get_audio(r):
     """
     # with makes sure mic is properly released once block exited
     #opens microphone
-    with r.Microphone() as source:
+    with sr.Microphone() as source:
         # Adjust microphone for ambient noise
         r.adjust_for_ambient_noise(source)
         print("start talking and I will hopefully catch and transcribe it...")

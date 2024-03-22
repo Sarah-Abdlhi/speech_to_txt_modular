@@ -6,7 +6,7 @@ from src.error_exception import SpeechRecognitionError, handle_error
 
 def main():
     # Initialize speech recognizer
-    r = sr.Recognizer()
+    r = sr.Recognizer()     # Create an instance of the Recognizer class
 
     try:
         # Capture audio input
