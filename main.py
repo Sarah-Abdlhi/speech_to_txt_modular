@@ -6,15 +6,19 @@ from src.error_exception import SpeechRecognitionError, handle_error
 
 def main():
     # Initialize speech recognizer
-    r = sr.Recognizer()     # Create an instance of the Recognizer class
+    r = sr.Recognizer()  # Create an instance of the Recognizer class
 
     try:
         # Capture audio input
         audio = get_audio(r)
         # Recognize speech
-        transcription = recognize_audio(r, audio, languages=['en-US', 'fa-IR', 'de-DE'])
+        transcription, language = recognize_audio(r, audio, languages=['en-US', 'fa-IR', 'de-DE'])
         # Print transcription
-        print_transcription(transcription)
+        if language == 'fa-IR':  # If Persian language is detected
+            # Display the transcribed text from right to left
+            print("Look at what you said ...\n" + transcription[::-1])
+        else:
+            print_transcription(transcription)
         # Save audio data
         save_audio(audio)
     except SpeechRecognitionError as e:
