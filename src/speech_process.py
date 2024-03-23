@@ -17,16 +17,17 @@ def recognize_audio(r, audio, languages=['en-US']):
     try:
         for language in languages:
             try:
-                result = r.recognize_google(audio, language=language, result_output_format='json')
-                result_dict = json.loads(result)
-                transcribed_text = result_dict['alternative'][0]['transcript']
+                transcribed_text = r.recognize_google(audio, language=language)
                 return transcribed_text, language
             except sr.UnknownValueError:
                 continue
         # If no transcription is successful
-        raise sr.UnknownValueError("Unable to recognize speech in any of the specified languages")
+        raise SpeechRecognitionError("Unable to recognize speech in any of the specified languages")
     except sr.RequestError:
-        raise Exception("Could not request results; check your internet connection")
+        raise SpeechRecognitionError("Could not request results; check your internet connection")
+    except Exception as e:
+        raise SpeechRecognitionError("Error occurred during speech recognition: {}".format(e))
+
 
 def recognize_audio_wrapper(r, languages=['en-US']):
     """
@@ -39,5 +40,8 @@ def recognize_audio_wrapper(r, languages=['en-US']):
     Returns:
     - Transcribed text
     """
-    audio = get_audio(r)
-    return recognize_audio(r, audio, languages)
+    try:
+        audio = get_audio(r)
+        return recognize_audio(r, audio, languages)
+    except Exception as e:
+        raise SpeechRecognitionError("Error occurred during audio capture: {}".format(e))
